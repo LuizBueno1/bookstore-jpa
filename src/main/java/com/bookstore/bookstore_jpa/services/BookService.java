@@ -9,6 +9,8 @@ import com.bookstore.bookstore_jpa.repositories.PublisherRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -21,6 +23,10 @@ public class BookService {
         this.bookRepository = bookRepository;
         this.authorRepository = authorRepository;
         this.publisherRepository = publisherRepository;
+    }
+
+    public List<BookModel> getAllBooks(){
+        return bookRepository.findAll();
     }
 
     @Transactional
@@ -39,6 +45,11 @@ public class BookService {
         book.setReview(review);
 
         return bookRepository.save(book);
+    }
+
+    @Transactional
+    public void deleteBook(UUID bookId){
+        bookRepository.deleteById(bookId);
     }
 
 }
